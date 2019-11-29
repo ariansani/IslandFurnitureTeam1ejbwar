@@ -26,9 +26,10 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Long countryID = (Long) session.getAttribute("countryID");
+            System.out.println(countryID);
             List<RetailProduct> retailProducts = getRetailProductListRESTful(countryID);
             session.setAttribute("retailProducts", retailProducts);
-
+            
             response.sendRedirect("/IS3102_Project-war/B/SG/allRetailProducts.jsp");
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
@@ -38,6 +39,7 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
     public List<RetailProduct> getRetailProductListRESTful(Long countryID) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client
+                //.target("http://localhost:8080/IS3102_WebService/webresources/entity.retailproductentity")
                 .target("http://localhost:8080/IS3102_WebService-Student/webresources/entity.retailproductentity")
                 .path("getRetailProductList")
                 .queryParam("countryID", countryID);
