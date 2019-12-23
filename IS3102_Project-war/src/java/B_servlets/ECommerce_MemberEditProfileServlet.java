@@ -44,10 +44,10 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
         // get values from form
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
-        String city = request.getParameter("city");
+        String city = request.getParameter("country");
         String address = request.getParameter("address");
         int securityQn = Integer.parseInt(request.getParameter("securityQuestion"));
-        String securityAna = request.getParameter("securityAnswer");
+        String securityAns = request.getParameter("securityAnswer");
         int age = Integer.parseInt(request.getParameter("age"));
         int income = Integer.parseInt(request.getParameter("income"));
         String password = request.getParameter("password");
@@ -57,14 +57,14 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
         
         Client client = ClientBuilder.newClient();
         WebTarget target = client
-                .target("http://localhost:8080:/IS3102 WebService-Student/webresources/entity.memberentity")
+                .target("http://localhost:8080/IS3102_WebService-Student/webresources/memberws")
                 .path("updateMemberProfile")
                 .queryParam("name", name)
                 .queryParam("phone", phone)
                 .queryParam("city", city)
                 .queryParam("address", address)
                 .queryParam("securityQn", securityQn)
-                .queryParam("securityAna", securityAna)
+                .queryParam("securityAns", securityAns)
                 .queryParam("age", age)
                 .queryParam("income", income)
                 .queryParam("password", password)
@@ -76,7 +76,7 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
         String msg;
         
         if(res.getStatus() == Response.Status.OK.getStatusCode()) {
-            msg = "Account updated succussfully";
+            msg = "Account updated successfully";
         }else {
             msg = "Failed to update account.";
         }

@@ -56,7 +56,7 @@ public class ECommerce_GetMember extends HttpServlet {
 
 //CA4
               HttpSession session = request.getSession();
-              String email= (String) request.getAttribute("memberEmail");
+              String email= (String) session.getAttribute("memberEmail");
               
         
               Client client = ClientBuilder.newClient();
