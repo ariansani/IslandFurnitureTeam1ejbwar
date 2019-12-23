@@ -57,9 +57,11 @@ public class ECommerce_GetMember extends HttpServlet {
 //CA4
               HttpSession session = request.getSession();
               String email= (String) request.getAttribute("memberEmail");
+              
+        
               Client client = ClientBuilder.newClient();
               WebTarget target = client
-                      .target("http://localhost:8080/IS3102_WebService-Student/webresrouces/memberws")
+                      .target("http://localhost:8080/IS3102_WebService-Student/webresources/memberws")
                       .path("getMemberProfile")
                       .queryParam("email",email);
               Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
@@ -67,7 +69,8 @@ public class ECommerce_GetMember extends HttpServlet {
               
              
               if(res.getStatus()==Response.Status.OK.getStatusCode()){
-                  Member member = res.readEntity(new GenericType<Member>(){});
+                  Member member = res.readEntity(new GenericType<Member>(){
+                  });
                   
                   String memberName = member.getName();
                   
@@ -92,6 +95,7 @@ public class ECommerce_GetMember extends HttpServlet {
                   
                   response.sendRedirect(url);
                   
+        
               }
               
               

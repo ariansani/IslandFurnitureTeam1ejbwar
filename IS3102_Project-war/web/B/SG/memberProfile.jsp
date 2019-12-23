@@ -56,6 +56,7 @@
                     <%
                         try {
                             Member member = (Member) session.getAttribute("member");
+                            String memberName = (String) session.getAttribute("memberName");
                             DecimalFormat df = new DecimalFormat("#.##");
                     %>
                     <div class="row" style="min-height: 500px;">
@@ -78,7 +79,7 @@
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input class="form-control" required="true" name="name" type="text" value="<%=member.getName()%>">
+                                            <input class="form-control" required="true" name="name" type="text" value="<%=memberName%>">
                                         </div>
                                         <div class="form-group">
                                             <label>E-mail Address</label>
