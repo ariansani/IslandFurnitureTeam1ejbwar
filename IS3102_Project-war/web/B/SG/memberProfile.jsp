@@ -78,15 +78,15 @@
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input class="form-control" required="true" name="name" type="text" value="<%=member.getName()%>">
+                                            <input class="form-control" required="true" name="name" type="text" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>E-mail Address</label>
-                                            <input class="form-control" required="true" value="<%=member.getEmail()%>" disabled/>
+                                            <input class="form-control" required="true" value="" disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone</label>
-                                            <input class="form-control" required="true" type="text" name="phone" value="<%=member.getPhone()%>">
+                                            <input class="form-control" required="true" type="text" name="phone" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>Country</label>
@@ -348,7 +348,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Address</label>
-                                            <input class="form-control" type="text" required="true" name="address" value="<%=member.getAddress()%>">
+                                            <input class="form-control" type="text" required="true" name="address" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>Set Challenge Question</label>
@@ -377,11 +377,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Age</label>
-                                            <input class="form-control" name="age" step="1" type="number" min="1" max="150" value="<%=member.getAge()%>">
+                                            <input class="form-control" name="age" step="1" type="number" min="1" max="150" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>Income per annum (in USD)</label>
-                                            <input class="form-control" name="income" step="1" type="number" min="0" max="2147483646" value="<%=member.getIncome()%>">
+                                            <input class="form-control" name="income" step="1" type="number" min="0" max="2147483646" value="">
                                         </div>
                                         <div class="form-group">
                                             <input type="checkbox" name="serviceLevelAgreement"> Allow us to use your particulars to serve you better?<br/>Checking the box above indicates that you agree to our <a onclick="pdpaWindow()">personal data protection policy.</a>
