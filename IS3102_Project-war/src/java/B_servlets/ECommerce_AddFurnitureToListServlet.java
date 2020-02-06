@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -52,6 +58,11 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
       item.setImageURL(imageURL);
       item.setQuantity(1);
       
+      Long countryID =(long) session.getAttribute("countryID");
+      
+      int stock = checkStockQuantity(SKU, countryID);
+      
+      
       ArrayList<ShoppingCartLineItem> cart = (ArrayList<ShoppingCartLineItem>) session.getAttribute("shoppingCart");
       if (cart == null) {
         cart = new ArrayList<>();
@@ -64,7 +75,30 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
       
     }
   }
+  
+  public int checkStockQuantity(String SKU, long countryID){
+      try{
+          Client client = ClientBuilder.newClient();
+          WebTarget target = client
+                  .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/entity.countryentity/")
+                  .path("getQuantity")
+                  .queryParam("SKU", SKU)
+                  .queryParam("countryID", countryID);
+          Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
+          Response response = invocationBuilder.get();
+          if(response.getStatus() != 200) {
+              return 0;
+          }
+          String result = (String) response.readEntity(String.class);
+          return Integer.parseInt(result);
+      }catch(Exception e){
+          e.printStackTrace();
+          int result = 0;
+          return result;
+      }
+      }
 
+  
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
   /**
    * Handles the HTTP <code>GET</code> method.
