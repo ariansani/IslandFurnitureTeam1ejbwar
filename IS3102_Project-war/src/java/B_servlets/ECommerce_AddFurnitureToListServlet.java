@@ -42,7 +42,6 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            ArrayList<ShoppingCartLineItem> shoppingCart = new ArrayList<>();
             HttpSession session = request.getSession();
             String id = request.getParameter("id");
             String SKU = request.getParameter("SKU");
@@ -50,8 +49,13 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             String name = request.getParameter("name");
             String imageURL = request.getParameter("imageURL");
 
-            System.out.println(imageURL);
-
+            ArrayList<ShoppingCartLineItem> shoppingCart = (ArrayList<ShoppingCartLineItem>) session.getAttribute("shoppingCart");
+            if (shoppingCart == null) {
+              shoppingCart = new ArrayList<>();
+              session.setAttribute("shoppingCart", shoppingCart);
+            }
+            
+            
             Long countryID = (long) session.getAttribute("countryID");
             int stock = checkStockQuantity(SKU, countryID);
             int itemId = 0;
