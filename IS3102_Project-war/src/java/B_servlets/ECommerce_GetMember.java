@@ -61,7 +61,7 @@ public class ECommerce_GetMember extends HttpServlet {
         
               Client client = ClientBuilder.newClient();
               WebTarget target = client
-                      .target("http://localhost:8080/IS3102_WebService-Student/webresources/memberws")
+                      .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/memberws")
                       .path("getMemberProfile")
                       .queryParam("email",email);
               Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
