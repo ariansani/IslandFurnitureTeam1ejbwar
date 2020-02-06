@@ -73,9 +73,11 @@ public class ECommerce_GetMember extends HttpServlet {
                   });
                   
                   String memberName = member.getName();
+                  Long memberID = member.getId();
                   
                   session.setAttribute("member",member);
                   session.setAttribute("memberName",memberName);
+                  session.setAttribute("memberID", memberID);
                   
                   String url="/IS3102_Project-war/B/SG/memberProfile.jsp";
                   

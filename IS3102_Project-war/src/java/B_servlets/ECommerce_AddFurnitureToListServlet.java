@@ -55,7 +55,6 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
               session.setAttribute("shoppingCart", shoppingCart);
             }
             
-            
             Long countryID = (long) session.getAttribute("countryID");
             int stock = checkStockQuantity(SKU, countryID);
             int itemId = 0;

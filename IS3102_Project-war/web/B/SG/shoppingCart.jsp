@@ -138,12 +138,12 @@
                                                                 <input type="checkbox" name="delete" value="" />
                                                             </td>
                                                             <td class="product-thumbnail">
-                                                                <a href="furnitureProductDetails.jsp">
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>">
                                                                     <img width="100" height="100" alt="" class="img-responsive" src="../../..<%=item.getImageURL()%>">
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a class="productDetails" href="furnitureProductDetails.jsp"><%=item.getName()%></a>
+                                                                <a class="productDetails" href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>"><%=item.getName()%></a>
                                                             </td>
                                                             <td class="product-price">
                                                                 $<span class="amount" id="price<%=item.getSKU()%>">
