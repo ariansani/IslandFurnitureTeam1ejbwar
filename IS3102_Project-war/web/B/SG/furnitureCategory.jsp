@@ -48,9 +48,6 @@
                             <ul class="products product-thumb-info-list" data-plugin-masonry>
                                 <%
                                     try {
-                                        /**
-                                         * *insert code here**
-                                         */
                                         for (int i=0; i<furnitures.size();i++){
                                         
                                 %>
