@@ -72,7 +72,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
                     shoppingCart.get(itemId).setQuantity(shoppingCart.get(itemId).getQuantity() + 1);
                     session.setAttribute("shoppingCart", shoppingCart);
                     result = "Item successfully added into the cart!";
-                    response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
+                    response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
                 } else {
                     result = "Item not added to cart, not enough quantity available!";
                     response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
@@ -91,7 +91,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
 
                 session.setAttribute("shoppingCart", shoppingCart);
                 result = "Item successfully added into the cart!";
-                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
+                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
             } else {
                 result = "Item not added to cart, not enough quantity available!";
                 response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
