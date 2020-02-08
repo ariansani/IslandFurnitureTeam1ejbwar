@@ -57,8 +57,8 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
         
         Client client = ClientBuilder.newClient();
         WebTarget target = client
-                .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/memberws")
-                .path("updateMemberProfile")
+                .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/entity.memberentity")
+                .path("editMember")
                 .queryParam("name", name)
                 .queryParam("phone", phone)
                 .queryParam("city", city)
