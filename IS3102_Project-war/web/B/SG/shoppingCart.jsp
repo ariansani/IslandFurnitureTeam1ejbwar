@@ -69,11 +69,11 @@
                 $("#makePaymentForm").show("slow", function () {
                 });
             }
-            function makePayment() {
-                window.event.returnValue = true;
-                document.makePaymentForm.action = "../../ECommerce_PaymentServlet";
-                document.makePaymentForm.submit();
-            }
+            //function makePayment() {
+            //    window.event.returnValue = true;
+            //    document.makePaymentForm.action = "../../ECommerce_PaymentServlet";
+            //    document.makePaymentForm.submit();
+           // }
         </script>
 
         <div class="body">
@@ -125,17 +125,17 @@
                                                     </thead>
                                                     <tbody>
                                                         <%ArrayList<ShoppingCartLineItem> shoppingCart = (ArrayList<ShoppingCartLineItem>) (session.getAttribute("shoppingCart"));
-                                                        float totalPrice = 0; //totalprice container for store prices of all items    
-                                                        try {
+                                                            float totalPrice = 0; //totalprice container for store prices of all items    
+                                                            try {
                                                                 if (shoppingCart != null && shoppingCart.size() > 0) {
-                                                                    
+
                                                                     for (ShoppingCartLineItem item : shoppingCart) {
 
 
                                                         %>      
                                                         <tr class="cart_table_item">
                                                             <td class="product-remove">
-                                                                <input type="checkbox" name="delete" value="<%=item.getSKU()%>" />
+                                                                <input type="checkbox" name="delete" value="" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>">
@@ -183,7 +183,7 @@
                                                             </td>
                                                             <td class="product-subtotal">
                                                                 $<span class="amount" id="finalPrice" name="finalPrice">
-                                                                            <%= totalPrice %>
+                                                                    <%= totalPrice%>
                                                                 </span>
                                                             </td>
                                                         </tr>
@@ -198,8 +198,7 @@
                                                 <%}%>
                                             </form>
 
-
-                                            <form id="makePaymentForm" name="makePaymentForm" method="post" hidden>
+                                            <form id="makePaymentForm" name="makePaymentForm" method="post" action="../../ECommerce_PaymentServlet" hidden>
                                                 <div class="col-md-8">
                                                     <br>
                                                     <table>
@@ -212,7 +211,7 @@
                                                                 <label>Name on Card: </label>
                                                             </td>
                                                             <td style="padding: 5px">
-                                                                <input type="text" class="input-text text" title="name"id="txtName" required>                                                            
+                                                                <input type="text" class="input-text text" pattern="[a-zA-Z][a-zA-Z]{2,}" title="Please enter a valid name!" title="name"id="txtName" required>                                                            
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -220,7 +219,7 @@
                                                                 <label>Card Number: </label>
                                                             </td>
                                                             <td style="padding: 5px">
-                                                                <input type="text" class="input-text text " title="cardno" id="txtCardNo" required>
+                                                                <input type="text" class="input-text text " maxlength="16" pattern="\d{16}|\d{4}[- ]\d{4}[- ]\d{4}" title="Please provide a valid credit card format!" title="cardno" id="txtCardNo" required>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -228,7 +227,7 @@
                                                                 <label>CVV/CVC2: </label>
                                                             </td>
                                                             <td style="padding: 5px">
-                                                                <input type="text" class="input-text text " title="securitycode" id="txtSecuritycode" required>
+                                                                <input type="text" class="input-text text " input="number" maxlength="3" pattern="\d{3}" title="Please provide a valid cvv format ###!" title="securitycode" id="txtSecuritycode" required>
                                                             </td>
                                                         </tr>
 
@@ -251,14 +250,14 @@
                                                                     <option>November</option>
                                                                     <option>December</option>
                                                                 </select>
-                                                                <input type="text" style="width: 60px" class="input-text text" title="year" id="year" required>(eg: 2015)                                                        
+                                                                <input type="text" style="width: 60px" class="input-text text" maxlength="4" pattern="\d{4}" title="Please enter a valid year" title="year" id="year" required>(eg: 2015)                                                        
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="">
                                                             </td>
                                                             <td style="padding-top: 20px">
-                                                                <div align="right"><a href="#makePaymentModal" data-toggle="modal"><button class="btn btn-primary">Make Payment</button></a></div>
+                                                                <div align="right"><input type="submit" data-toggle="modal" class="btn btn-primary" value="Make Payment"></div>
                                                             </td>
                                                         </tr>
                                                         </tbody></table>
