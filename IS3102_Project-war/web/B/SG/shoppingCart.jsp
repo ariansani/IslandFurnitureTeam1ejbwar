@@ -27,7 +27,7 @@
                         numOfTicks++;
                     }
                 }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
+                if (checkboxes.length === 0 || numOfTicks === 0) {
                     window.event.returnValue = true;
                     document.shoppingCart.action = "/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=No item(s) selected for deletion.";
                     document.shoppingCart.submit();
@@ -59,21 +59,7 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
-            function checkOut() {
-                $(".plus").prop("disabled", true);
-                $(".minus").prop("disabled", true);
-                $("#btnCheckout").prop("disabled", true);
-                $("#btnRemove").prop("disabled", true);
-                $(".productDetails").removeAttr("href");
-                $("html, body").animate({scrollTop: $(document).height() / 3}, "slow");
-                $("#makePaymentForm").show("slow", function () {
-                });
-            }
-            //function makePayment() {
-            //    window.event.returnValue = true;
-            //    document.makePaymentForm.action = "../../ECommerce_PaymentServlet";
-            //    document.makePaymentForm.submit();
-           // }
+                      
         </script>
 
         <div class="body">
@@ -135,7 +121,7 @@
                                                         %>      
                                                         <tr class="cart_table_item">
                                                             <td class="product-remove">
-                                                                <input type="checkbox" name="delete" value="" />
+                                                                <input type="checkbox" name="delete" value="<%=item.getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>">
@@ -257,12 +243,16 @@
                                                             <td style="">
                                                             </td>
                                                             <td style="padding-top: 20px">
-                                                                <div align="right"><input type="submit" data-toggle="modal" class="btn btn-primary" value="Make Payment"></div>
+                                                                <div align="right"><input type="submit" data-toggle="modal" class="btn btn-primary" value="Make Payment"></div>                                                      
                                                             </td>
                                                         </tr>
                                                         </tbody></table>
                                                 </div>
+                                                <div class="col-md-8" style="padding-top: 20px">
+                                                    <h4 style="text-align: right">-------Or pay with Paypal/Debit or Credit Card-------</h4>
+                                                </div>
                                             </form>
+                                            <div class="col-md-8" style="height:30px"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -322,6 +312,51 @@
                 </div>
             </div>  
 
+            <script>
+                function makePayment() {
+                    window.event.returnValue = true;
+                    document.makePaymentForm.action = "../../ECommerce_PaymentServlet?";
+                    document.makePaymentForm.submit();
+                }
+                function checkOut() {
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                        amount: {
+                                            value: <%=totalPrice%>
+                                        }
+                                    }]
+                            });
+                        },
+                        onApprove: function (data, actions) {
+                            makePayment();
+                            return actions.order.capture().then(function (details) {
+                                alert('Transaction completed by ' + details.payer.name.given_name);
+                                // Call your server to save the transaction
+                                return fetch('/paypal-transaction-complete', {
+                                    method: 'post',
+                                    headers: {
+                                        'content-type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        orderID: data.orderID
+                                    })
+                                });
+                            });
+                        }
+                    }).render('#makePaymentForm');
+                    $(".plus").prop("disabled", true);
+                    $(".minus").prop("disabled", true);
+                    $("#btnCheckout").prop("disabled", true);
+                    $("#btnRemove").prop("disabled", true);
+                    $(".productDetails").removeAttr("href");
+                    $("html, body").animate({scrollTop: $(document).height() / 3}, "slow");
+                    $("#makePaymentForm").show("slow", function () {
+                    });
+                }
+            </script>
+                                            
             <jsp:include page="footer.html" />
 
             <!-- Theme Initializer -->
@@ -332,7 +367,8 @@
             <script src="../../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
             <script src="../../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
             <script src="../../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="../../js/views/view.home.js"></script>   
+            <script src="../../js/views/view.home.js"></script>
+            <script src="https://www.paypal.com/sdk/js?client-id=AeGAIf_Rn1KGZ1MsNNsgMlxj9r6jzPG1AAsQj5OBwm_VaiqWhsABP3ahcog1MOFAasjs4z_07DQ9Dizh"></script>
         </div>
     </body>
 </html>

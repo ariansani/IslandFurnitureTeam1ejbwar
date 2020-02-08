@@ -70,7 +70,6 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             if (check) {
                 if (shoppingCart.get(itemId).getQuantity() < stock) {
                     shoppingCart.get(itemId).setQuantity(shoppingCart.get(itemId).getQuantity() + 1);
-                    session.setAttribute("shoppingCart", shoppingCart);
                     msg = "?goodMsg=Item successfully added into the cart!";
                 } else {
                     msg = "?errMsg=Item not added to cart, not enough quantity available!";
