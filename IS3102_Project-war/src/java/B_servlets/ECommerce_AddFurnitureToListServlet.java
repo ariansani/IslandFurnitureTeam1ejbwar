@@ -59,7 +59,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             int stock = checkStockQuantity(SKU, countryID);
             int itemId = 0;
             boolean check = false;
-            String result;
+            String msg;
 
             for (int i = 0; i < shoppingCart.size(); i++) {
                 if (shoppingCart.get(i).getSKU().equals(SKU)) {
@@ -71,11 +71,9 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
                 if (shoppingCart.get(itemId).getQuantity() < stock) {
                     shoppingCart.get(itemId).setQuantity(shoppingCart.get(itemId).getQuantity() + 1);
                     session.setAttribute("shoppingCart", shoppingCart);
-                    result = "Item successfully added into the cart!";
-                    response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
+                    msg = "?goodMsg=Item successfully added into the cart!";
                 } else {
-                    result = "Item not added to cart, not enough quantity available!";
-                    response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
+                    msg = "?errMsg=Item not added to cart, not enough quantity available!";
                 }
             } else if (stock != 0) {
                 ShoppingCartLineItem item = new ShoppingCartLineItem();
@@ -90,12 +88,12 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
                 shoppingCart.add(item);
 
                 session.setAttribute("shoppingCart", shoppingCart);
-                result = "Item successfully added into the cart!";
-                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
+                msg = "?goodMsg=Item successfully added into the cart!";
             } else {
-                result = "Item not added to cart, not enough quantity available!";
-                response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?errMsg=" + result);
+                msg = "?errMsg=Item not added to cart, not enough quantity available!";
             }
+            
+            response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp" + msg);
         }
 
     }
