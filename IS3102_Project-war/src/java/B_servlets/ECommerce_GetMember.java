@@ -61,8 +61,8 @@ public class ECommerce_GetMember extends HttpServlet {
         
               Client client = ClientBuilder.newClient();
               WebTarget target = client
-                      .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/memberws")
-                      .path("getMemberProfile")
+                      .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/entity.memberentity")
+                      .path("getMember")
                       .queryParam("email",email);
               Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
               Response res = invocationBuilder.get();
@@ -73,9 +73,11 @@ public class ECommerce_GetMember extends HttpServlet {
                   });
                   
                   String memberName = member.getName();
+                  Long memberID = member.getId();
                   
                   session.setAttribute("member",member);
                   session.setAttribute("memberName",memberName);
+                  session.setAttribute("memberID", memberID);
                   
                   String url="/IS3102_Project-war/B/SG/memberProfile.jsp";
                   

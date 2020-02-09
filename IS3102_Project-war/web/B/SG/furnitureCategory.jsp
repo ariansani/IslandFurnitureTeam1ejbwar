@@ -1,4 +1,4 @@
-<%@page import="HelperClasses.Member"%>
+fu<%@page import="HelperClasses.Member"%>
 <%@page import="HelperClasses.Furniture"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="java.util.List"%>
@@ -48,9 +48,6 @@
                             <ul class="products product-thumb-info-list" data-plugin-masonry>
                                 <%
                                     try {
-                                        /**
-                                         * *insert code here**
-                                         */
                                         for (int i=0; i<furnitures.size();i++){
                                         
                                 %>

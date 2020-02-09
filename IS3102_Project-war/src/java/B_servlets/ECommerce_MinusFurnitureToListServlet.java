@@ -5,27 +5,23 @@
  */
 package B_servlets;
 
+import HelperClasses.ShoppingCartLineItem;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 /**
  *
  * @author canyo
  */
-@WebServlet(name = "ECommerce_MemberEditProfileServlet", urlPatterns = {"/ECommerce_MemberEditProfileServlet"})
-public class ECommerce_MemberEditProfileServlet extends HttpServlet {
+@WebServlet(name = "ECommerce_MinusFurnitureToListServlet", urlPatterns = {"/ECommerce_MinusFurnitureToListServlet"})
+public class ECommerce_MinusFurnitureToListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,50 +35,34 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String result;
         try (PrintWriter out = response.getWriter()) {
+          HttpSession session = request.getSession();
+           String SKU = request.getParameter("SKU");
+            ArrayList<ShoppingCartLineItem> cart = (ArrayList<ShoppingCartLineItem>) (session.getAttribute("shoppingCart"));
             
-        // get values from form
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String city = request.getParameter("country");
-        String address = request.getParameter("address");
-        int securityQn = Integer.parseInt(request.getParameter("securityQuestion"));
-        String securityAns = request.getParameter("securityAnswer");
-        int age = Integer.parseInt(request.getParameter("age"));
-        int income = Integer.parseInt(request.getParameter("income"));
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        
-        HttpSession session = request.getSession();
-        
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client
-                .target("http://localhost:8080/IslandFurnitureTeam1WS/webresources/entity.memberentity")
-                .path("editMember")
-                .queryParam("name", name)
-                .queryParam("phone", phone)
-                .queryParam("city", city)
-                .queryParam("address", address)
-                .queryParam("securityQn", securityQn)
-                .queryParam("securityAns", securityAns)
-                .queryParam("age", age)
-                .queryParam("income", income)
-                .queryParam("password", password)
-                .queryParam("email",email);
-        
-        Invocation.Builder invocationBuilder = target.request();
-        Response res = invocationBuilder.put(Entity.entity("", "application/json"));
-        
-        String msg;
-        
-        if(res.getStatus() == Response.Status.OK.getStatusCode()) {
-            msg = "Account updated successfully";
-        }else {
-            msg = "Failed to update account.";
-        }
-        session.setAttribute("updateMsg", msg);
-        response.sendRedirect("ECommerce_GetMember");
-            
+            ArrayList<Integer> qtyLeft = (ArrayList<Integer>) (session.getAttribute("qtyLeft"));
+            String responseStr="";
+            for (int i = 0; i < cart.size(); i++){
+                if(cart.get(i).getSKU().equals(SKU)){
+                    if(cart.get(i).getQuantity() == 1){
+                        cart.remove(i);
+                        qtyLeft.remove(i);
+                        result = "Item removed from cart!";
+                        responseStr=("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
+                    }
+                    else{
+                        result = "Item quantity reduced!";
+                        cart.get(i).setQuantity(cart.get(i).getQuantity() - 1);
+                        qtyLeft.set(i,qtyLeft.get(i)+1);
+                        responseStr=("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
+                    }
+                    break;
+                }
+            }                           
+            session.setAttribute("qtyLeft",qtyLeft);
+            session.setAttribute("shoppingCart", cart);
+            response.sendRedirect(responseStr);    
         }
     }
 
