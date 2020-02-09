@@ -40,22 +40,27 @@ public class ECommerce_MinusFurnitureToListServlet extends HttpServlet {
           HttpSession session = request.getSession();
            String SKU = request.getParameter("SKU");
             ArrayList<ShoppingCartLineItem> cart = (ArrayList<ShoppingCartLineItem>) (session.getAttribute("shoppingCart"));
+            
+            ArrayList<Integer> qtyLeft = (ArrayList<Integer>) (session.getAttribute("qtyLeft"));
             String responseStr="";
             for (int i = 0; i < cart.size(); i++){
                 if(cart.get(i).getSKU().equals(SKU)){
                     if(cart.get(i).getQuantity() == 1){
                         cart.remove(i);
+                        qtyLeft.remove(i);
                         result = "Item removed from cart!";
                         responseStr=("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
                     }
                     else{
                         result = "Item quantity reduced!";
                         cart.get(i).setQuantity(cart.get(i).getQuantity() - 1);
+                        qtyLeft.set(i,qtyLeft.get(i)+1);
                         responseStr=("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg=" + result);
                     }
                     break;
                 }
             }                           
+            session.setAttribute("qtyLeft",qtyLeft);
             session.setAttribute("shoppingCart", cart);
             response.sendRedirect(responseStr);    
         }

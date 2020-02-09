@@ -54,6 +54,11 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
               shoppingCart = new ArrayList<>();
               session.setAttribute("shoppingCart", shoppingCart);
             }
+            ArrayList<Integer> qtyLeft = (ArrayList<Integer>) session.getAttribute("qtyLeft");
+            if(qtyLeft == null){
+                qtyLeft = new ArrayList<>();
+                session.setAttribute("qtyLeft",qtyLeft);
+            }
             
             Long countryID = (long) session.getAttribute("countryID");
             int stock = checkStockQuantity(SKU, countryID);
@@ -69,7 +74,9 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             }
             if (check) {
                 if (shoppingCart.get(itemId).getQuantity() < stock) {
+                    System.out.println(stock);
                     shoppingCart.get(itemId).setQuantity(shoppingCart.get(itemId).getQuantity() + 1);
+                    qtyLeft.set(itemId,qtyLeft.get(itemId)-1);
                     msg = "?goodMsg=Item successfully added into the cart!";
                 } else {
                     msg = "?errMsg=Item not added to cart, not enough quantity available!";
@@ -85,7 +92,8 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
                 item.setQuantity(1);
 
                 shoppingCart.add(item);
-
+                qtyLeft.add(stock-1);
+                session.setAttribute("qtyLeft",qtyLeft);
                 session.setAttribute("shoppingCart", shoppingCart);
                 msg = "?goodMsg=Item successfully added into the cart!";
             } else {

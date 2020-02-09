@@ -51,7 +51,8 @@
             function plus(SKU, name, price, imageURL) {
                 window.event.returnValue = true;
                 document.shoppingCart.action = "../../ECommerce_AddFurnitureToListServlet?SKU=" + SKU + "&price=" + price + "&name=" + name + "&imageURL=" + imageURL;
-                document.shoppingCart.submit();
+                
+        document.shoppingCart.submit();
             }
             function finalTotalPrice() {
                 checkboxes = document.getElementsById('totalPrice');
@@ -111,7 +112,9 @@
                                                     </thead>
                                                     <tbody>
                                                         <%ArrayList<ShoppingCartLineItem> shoppingCart = (ArrayList<ShoppingCartLineItem>) (session.getAttribute("shoppingCart"));
+                                                        ArrayList<Integer> qtyLeft = (ArrayList<Integer>)(session.getAttribute("qtyLeft"));
                                                             float totalPrice = 0; //totalprice container for store prices of all items    
+                                                           int count=0;
                                                             try {
                                                                 if (shoppingCart != null && shoppingCart.size() > 0) {
 
@@ -130,6 +133,7 @@
                                                             </td>
                                                             <td class="product-name">
                                                                 <a class="productDetails" href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>"><%=item.getName()%></a>
+                                                                <%=qtyLeft.get(count)%> left in stock
                                                             </td>
                                                             <td class="product-price">
                                                                 $<span class="amount" id="price<%=item.getSKU()%>">
@@ -153,7 +157,7 @@
                                                         </tr>
                                                         <%
                                                                         totalPrice += item.getPrice() * item.getQuantity();
-                                                                    }
+                                                                    count++;}
                                                                 }
                                                             } catch (Exception ex) {
                                                                 System.out.println(ex);

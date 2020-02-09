@@ -45,6 +45,7 @@ public class ECommerce_PaymentServlet extends HttpServlet {
       /* TODO output your page here. You may use following sample code. */
       HttpSession session = request.getSession();
       ArrayList<ShoppingCartLineItem> cart = (ArrayList<ShoppingCartLineItem>) session.getAttribute("shoppingCart");
+      ArrayList<Integer> qtyLeft = (ArrayList<Integer>) session.getAttribute("qtyLeft");
       long countryID = (long) session.getAttribute("countryID");
       long memberID = (long) session.getAttribute("memberID");
       boolean result = false;
@@ -65,6 +66,8 @@ public class ECommerce_PaymentServlet extends HttpServlet {
         }
         //After transaction clear the cart of items
         cart.clear();
+        qtyLeft.clear();
+        session.setAttribute("qtyLeft",qtyLeft);
         session.setAttribute("shoppingCart", cart);
         response.sendRedirect("/IS3102_Project-war/B/SG/shoppingCart.jsp?goodMsg="
                 + "Thank you for shopping at Island Furniture. You have checkout successfully!");

@@ -39,12 +39,14 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
              String result;
              int index=0;
              String[] SKUchecked=request.getParameterValues("delete");
+             ArrayList<Integer> qtyLeft = (ArrayList<Integer>)(session.getAttribute("qtyLeft"));
         
              List<Integer> intList= new ArrayList<Integer>();
                 for (String SKU : SKUchecked){
                 for (ShoppingCartLineItem cartItem : cart){
                     if (cartItem.getSKU().equals(SKU))
                        index=cart.indexOf(cartItem);
+                        
                 }
                 intList.add(index);
             }
@@ -52,9 +54,10 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
                 
             for(int i : intList){
                 cart.remove(i);
+                qtyLeft.remove(i);
             }
                 
-            
+            session.setAttribute("qtyLeft",qtyLeft);
             session.setAttribute("shoppingCart", cart);
             
             result="Item successfully removed from the cart!";
