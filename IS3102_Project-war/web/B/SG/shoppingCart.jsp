@@ -133,7 +133,7 @@
                                                             </td>
                                                             <td class="product-name">
                                                                 <a class="productDetails" href="furnitureProductDetails.jsp?sku=<%=item.getSKU()%>"><%=item.getName()%></a>
-                                                                <%=qtyLeft.get(count)%> left in stock
+                                                                 <%if(qtyLeft.get(count)<6){   %> <%=qtyLeft.get(count)%> left in stock!<% } %> 
                                                             </td>
                                                             <td class="product-price">
                                                                 $<span class="amount" id="price<%=item.getSKU()%>">
